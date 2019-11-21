@@ -125,3 +125,4 @@ dmypy.json
 .pyre/
 *.mkv
 *.opus
+*.wav
