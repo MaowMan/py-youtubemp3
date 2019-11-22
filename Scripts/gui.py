@@ -17,7 +17,7 @@ class Main(object):
         self.FiletypeMenu=Menu(self.Root,tearoff=0)
         self.Topbar.add_cascade(label="檔案類型",menu=self.FiletypeMenu)
         filetypes=[
-            "aac","vorbis","mp3","m4a","opus","wav"
+            "wav","aac","vorbis","mp3","m4a","opus"
         ]
         self.FiletypeVar=StringVar(value=filetypes[0])
         for filetype in filetypes:
