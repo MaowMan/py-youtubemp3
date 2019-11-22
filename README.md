@@ -1,6 +1,6 @@
 # py-youtubemp3
 圖形化的youtube音樂下載工具  
-以MIT以MIT Licence 發行  
+以MIT Licence 發行  
 # 專案介紹  
 因為最OG的youtubemp3被抄家了只好自己寫一個  
 由tkinter框架編寫的youtube-dl 圖形化使用者介面  
