@@ -11,9 +11,7 @@
 [ffmpeg](https://github.com/FFmpeg/FFmpeg) 編寫時版本為 1.4  
   
 建議使用pip安裝於python環境中  
-可在檔案所屬資料夾中執行  
-    pip install -r requirements.txt  
-安裝所需套件
+可在檔案所屬資料夾中執行 `pip install -r requirements.txt` 安裝所需套件
 # 如何使用  
 執行`Main.py`展開圖形化介面  
 # 備註
