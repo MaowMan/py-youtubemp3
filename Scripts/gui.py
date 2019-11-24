@@ -60,6 +60,7 @@ class Main(object):
         else:
             messagebox.showinfo("py-youtubemp3","下載完成")
         self.Root.deiconify()
+        self.UrlVar.set("")
         
 
 if __name__=="__main__":
