@@ -34,6 +34,13 @@ class Main(object):
         for quality in qualities:
             self.QualityMenu.add_radiobutton(label=qualitytag(quality),variable=self.QualityVar,value=quality)
         
+        self.QueueMenu=Menu(self.Root,tearoff=0)
+        self.Topbar.add_cascade(label="序列選項",menu=self.QueueMenu)
+        self.QueueMenu.add_command(label="查看序列",command=lambda :messagebox.showinfo("py-youtubemp3",str(self.Urls)) if self.Urls!=[] else messagebox.showinfo("py-youtubemp3","序列為空"))
+        self.QueueMenu.add_command(label="清空序列",command=lambda :self.Urls.clear())
+        self.QueueMenu.add_command(label="清除末項",command=lambda :self.Urls.pop() if self.Urls!=[] else None)
+
+
         self.OtherMenu=Menu(self.Root,tearoff=0)
         self.Topbar.add_cascade(label="其他選項",menu=self.OtherMenu)
         self.PlaylistVar=BooleanVar(value=True)
