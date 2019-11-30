@@ -35,6 +35,8 @@ class Main(object):
         self.Topbar.add_cascade(label="其他選項",menu=self.OtherMenu)
         self.PlaylistVar=BooleanVar(value=True)
         self.OtherMenu.add_checkbutton(label="下載整個播放清單",variable=self.PlaylistVar,onvalue=True,offvalue=False)
+        self.SearchVar=BooleanVar(value=True)
+        self.OtherMenu.add_checkbutton(label="以歌名搜尋",variable=self.SearchVar,onvalue=True,offvalue=False)
     def SetupMain(self):
         self.UrlLabel=Label(self.Root,text="輸入網址：")
         self.UrlLabel.grid(row=0,column=0)
@@ -52,6 +54,8 @@ class Main(object):
             "--audio-quality",str(self.QualityVar.get()), 
         ]
         args.append("--yes-playlist") if self.PlaylistVar.get() else args.append("--no-playlist")
+        if self.SearchVar.get():
+            self.UrlVar.set("ytsearch:"+self.UrlVar.get())
         messagebox.showinfo("py-youtubemp3","下載檔案中")
         self.Root.withdraw()
         stdout,stderr=download(url=self.UrlVar.get(),args=args)
