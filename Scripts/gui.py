@@ -7,9 +7,12 @@ class Main(object):
     def NewWindow(self):
         self.Root=Tk()
         self.Root.title("py-youtubemp3")
+        self.Init()
         self.Setupbar()
         self.SetupMain()
         self.Loop()
+    def Init(self):
+        self.Urls=[]
     def Setupbar(self):
         self.Topbar=Menu(self.Root,tearoff=0)
         self.Root.config(menu=self.Topbar)
@@ -35,7 +38,7 @@ class Main(object):
         self.Topbar.add_cascade(label="其他選項",menu=self.OtherMenu)
         self.PlaylistVar=BooleanVar(value=True)
         self.OtherMenu.add_checkbutton(label="下載整個播放清單",variable=self.PlaylistVar,onvalue=True,offvalue=False)
-        self.SearchVar=BooleanVar(value=True)
+        self.SearchVar=BooleanVar(value=False)
         self.OtherMenu.add_checkbutton(label="以歌名搜尋",variable=self.SearchVar,onvalue=True,offvalue=False)
     def SetupMain(self):
         self.UrlLabel=Label(self.Root,text="輸入網址：")
@@ -43,11 +46,18 @@ class Main(object):
         self.UrlVar=StringVar()
         self.UrlEntry=Entry(self.Root,textvariable=self.UrlVar)
         self.UrlEntry.grid(row=0,column=1)
+        self.QuequButton=Button(self.Root,text="加入序列",command=self.AddQueue)
+        self.QuequButton.grid(row=0,column=2)
         self.StartButton=Button(self.Root,text="開始",command=self.Start,fg="green")
-        self.StartButton.grid(row=0,column=2)
+        self.StartButton.grid(row=0,column=3)
     def Loop(self):
         self.Root.mainloop()
     def Start(self):
+        if self.UrlVar.get()=="":
+            if self.Urls==[]:
+                return None
+        else:
+            self.Urls.append(self.UrlVar.get()) if self.SearchVar.get() else self.Urls.append("ytsearch:"+self.UrlVar.get())
         args=[
             "-x",
             "--audio-format",self.FiletypeVar.get(),
@@ -58,12 +68,19 @@ class Main(object):
             self.UrlVar.set("ytsearch:"+self.UrlVar.get())
         messagebox.showinfo("py-youtubemp3","下載檔案中")
         self.Root.withdraw()
-        stdout,stderr=download(url=self.UrlVar.get(),args=args)
+        stdout,stderr=download(url=self.Urls,args=args)
         if len(stderr) !=0:
             messagebox.showerror("py-youtubemp3",stderr)
         else:
             messagebox.showinfo("py-youtubemp3","下載完成")
         self.Root.deiconify()
+        self.UrlVar.set("")
+        self.Urls=[]
+    def AddQueue(self):
+        if len(self.UrlVar.get())==0:
+            return None
+        self.Urls.append("ytsearch:"+self.UrlVar.get()) if self.SearchVar.get() else self.Urls.append(self.UrlVar.get())
+        messagebox.showinfo("py-youtubemp3","已將{}加入下載序列\n點擊開始已開始下載".format(self.UrlVar.get()))
         self.UrlVar.set("")
         
 
