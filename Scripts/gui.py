@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from Scripts.main import download
+import json
 class Main(object):
     def __init__(self):
         self.NewWindow()
@@ -13,6 +14,7 @@ class Main(object):
         self.Loop()
     def Init(self):
         self.Urls=[]
+        self.NotifyVal=BooleanVar(value=True)
     def Setupbar(self):
         self.Topbar=Menu(self.Root,tearoff=0)
         self.Root.config(menu=self.Topbar)
@@ -36,7 +38,7 @@ class Main(object):
         
         self.QueueMenu=Menu(self.Root,tearoff=0)
         self.Topbar.add_cascade(label="序列選項",menu=self.QueueMenu)
-        self.QueueMenu.add_command(label="查看序列",command=lambda :messagebox.showinfo("py-youtubemp3",str(self.Urls)) if self.Urls!=[] else messagebox.showinfo("py-youtubemp3","序列為空"))
+        self.QueueMenu.add_command(label="查看序列",command=lambda :messagebox.showinfo("py-youtubemp3",json.dumps(self.Urls) if self.Urls!=[] else messagebox.showinfo("py-youtubemp3","序列為空")))
         self.QueueMenu.add_command(label="清空序列",command=lambda :self.Urls.clear())
         self.QueueMenu.add_command(label="清除末項",command=lambda :self.Urls.pop() if self.Urls!=[] else None)
 
@@ -87,7 +89,9 @@ class Main(object):
         if len(self.UrlVar.get())==0:
             return None
         self.Urls.append("ytsearch:"+self.UrlVar.get()) if self.SearchVar.get() else self.Urls.append(self.UrlVar.get())
-        messagebox.showinfo("py-youtubemp3","已將{}加入下載序列\n點擊開始已開始下載".format(self.UrlVar.get()))
+        if self.NotifyVal.get():
+            messagebox.showinfo("py-youtubemp3","已將{}加入下載序列\n點擊開始已開始下載".format(self.UrlVar.get()))
+            self.NotifyVal.set(False)
         self.UrlVar.set("")
         
 
