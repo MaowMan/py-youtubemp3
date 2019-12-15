@@ -1,2 +1,2 @@
-ffmpeg==1.4
-youtube-dl==2019.11.5
+ffmpeg == 1.4
+youtube-dl == 2019.11.5
